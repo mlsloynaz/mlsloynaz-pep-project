@@ -132,10 +132,231 @@ Password: (leave empty)
 
 ## Usage
 
-> Here, you instruct other people on how to use your project after they’ve installed it. This would also be a good place to include screenshots of your project in action.
+Consume Apis from a client app or test your apis with postman. 
+Here the list of valid url and payload
+# API Documentation
+
+## Summary of Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/register` | Register a new user account |
+| POST | `/login` | Authenticate an existing user |
+| POST | `/messages` | Create a new message |
+| PATCH | `/messages/{message_id}` | Update an existing message |
+| DELETE | `/messages/{message_id}` | Remove a message |
+| GET | `/messages` | Retrieve all messages |
+| GET | `/messages/{message_id}` | Retrieve a specific message |
+| GET | `/accounts/{account_id}/messages` | Retrieve all messages from a specific user |
+
+## Detailed Documentation
+
+### Account Endpoints
+
+<details>
+  <summary><code>POST</code> <code>/register</code> - Register a new account</summary>
+
+#### Request Body
+```json
+{
+  "username": "string",
+  "password": "string"
+}
+```
+
+#### Responses
+- `200 OK` - Account created successfully
+- `400 Bad Request` - Username taken or invalid input
+
+#### Response Example (200 OK)
+```json
+{
+  "account_id": 1,
+  "username": "johndoe",
+  "password": "password123"
+}
+```
+</details>
+
+<details>
+  <summary><code>POST</code> <code>/login</code> - Login to existing account</summary>
+
+#### Request Body
+```json
+{
+  "username": "string",
+  "password": "string"
+}
+```
+
+#### Responses
+- `200 OK` - Login successful
+- `401 Unauthorized` - Invalid credentials
+
+#### Response Example (200 OK)
+```json
+{
+  "account_id": 1,
+  "username": "johndoe",
+  "password": "password123"
+}
+```
+</details>
+
+### Message Endpoints
+
+<details>
+  <summary><code>POST</code> <code>/messages</code> - Create a new message</summary>
+
+#### Request Body
+```json
+{
+  "posted_by": 1,
+  "message_text": "Hello world!",
+  "time_posted_epoch": 1609459200000
+}
+```
+
+#### Responses
+- `200 OK` - Message created successfully
+- `400 Bad Request` - Invalid input or constraints violated
+
+#### Response Example (200 OK)
+```json
+{
+  "message_id": 1,
+  "posted_by": 1,
+  "message_text": "Hello world!",
+  "time_posted_epoch": 1609459200000
+}
+```
+</details>
+
+<details>
+  <summary><code>PATCH</code> <code>/messages/{message_id}</code> - Update a message</summary>
+
+#### Path Parameters
+- `message_id` - ID of the message to update
+
+#### Request Body
+```json
+{
+  "message_text": "Updated message text"
+}
+```
+
+#### Responses
+- `200 OK` - Message updated successfully
+- `400 Bad Request` - Message not found or invalid input
+
+#### Response Example (200 OK)
+```json
+{
+  "message_id": 1,
+  "posted_by": 1,
+  "message_text": "Updated message text",
+  "time_posted_epoch": 1609459200000
+}
+```
+</details>
+
+<details>
+  <summary><code>DELETE</code> <code>/messages/{message_id}</code> - Delete a message</summary>
+
+#### Path Parameters
+- `message_id` - ID of the message to delete
+
+#### Responses
+- `200 OK` - Message deleted successfully
+- `400 Bad Request` - Message not found
+
+#### Response Example (200 OK)
+```json
+{
+  "message_id": 1,
+  "posted_by": 1,
+  "message_text": "Hello world!",
+  "time_posted_epoch": 1609459200000
+}
+```
+</details>
+
+<details>
+  <summary><code>GET</code> <code>/messages</code> - Get all messages</summary>
+
+#### Responses
+- `200 OK` - Returns all messages
+
+#### Response Example (200 OK)
+```json
+[
+  {
+    "message_id": 1,
+    "posted_by": 1,
+    "message_text": "Hello world!",
+    "time_posted_epoch": 1609459200000
+  },
+  {
+    "message_id": 2,
+    "posted_by": 2,
+    "message_text": "Another message",
+    "time_posted_epoch": 1609459300000
+  }
+]
+```
+</details>
+
+<details>
+  <summary><code>GET</code> <code>/messages/{message_id}</code> - Get a specific message</summary>
+
+#### Path Parameters
+- `message_id` - ID of the message to retrieve
+
+#### Responses
+- `200 OK` - Returns the requested message
+- Empty response if message not found
+
+#### Response Example (200 OK)
+```json
+{
+  "message_id": 1,
+  "posted_by": 1,
+  "message_text": "Hello world!",
+  "time_posted_epoch": 1609459200000
+}
+```
+</details>
+
+<details>
+  <summary><code>GET</code> <code>/accounts/{account_id}/messages</code> - Get all messages by a user</summary>
+
+#### Path Parameters
+- `account_id` - ID of the user account
+
+#### Responses
+- `200 OK` - Returns all messages by the specified user
+
+#### Response Example (200 OK)
+```json
+[
+  {
+    "message_id": 1,
+    "posted_by": 1,
+    "message_text": "Hello world!",
+    "time_posted_epoch": 1609459200000
+  },
+  {
+    "message_id": 3,
+    "posted_by": 1,
+    "message_text": "My second message",
+    "time_posted_epoch": 1609459400000
+  }
+]
+```
+</details>
 
 
 ## License
 
-This project uses the following license: [<license_name>](<link>).
+This project uses the following license: MIT License.
 
